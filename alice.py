@@ -37,11 +37,14 @@ def handle_dialog(res, req):
     # stops = [get_start_stops(req), get_final_stops(req)]
     start_stop = get_start_stops(req)
     final_stop = None
+    flg = False
     # if not stops:
     #     res['response']['text'] = f'Я не поняла, повторите ещё раз.'
     if start_stop and not final_stop:
         res['response']['text'] = 'Отлично! Теперь введите конечную остановку.'
-    final_stop = get_final_stops(req)
+        flg = True
+    if flg:
+        final_stop = get_final_stops(req)
     if final_stop:
         # distance = get_distance(get_geo_info(cities[0], 'coordinates'), get_geo_info(cities[1], 'coordinates'))
         res['response']['text'] = f'Я готова построить маршрут от остановки "{start_stop}" до остановки "{final_stop}"'
