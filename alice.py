@@ -612,7 +612,7 @@ def handle_dialog(res, req):
 
 
 def get_stops(req):
-    stops = [req['request']['original_utterance'].split(',')[0], req['request']['original_utterance'].split(',')[1]]
+    stops = [req['request']['original_utterance'].split(', ')[0], req['request']['original_utterance'].split(', ')[1]]
     return stops
 
 
