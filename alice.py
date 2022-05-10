@@ -34,14 +34,14 @@ def handle_dialog(res, req):
         res['response']['text'] = 'Введи начальную остановку.'
         return
     # Получаем города из нашего
-    stops = get_stops(req)
-    if not stops:
-        res['response']['text'] = f'Я не поняла, повторите ещё раз.'
-    elif len(stops) == 1:
+    # stops = [get_start_stops(req), get_final_stops(req)]
+    start_stop = get_start_stops(req)
+    # if not stops:
+    #     res['response']['text'] = f'Я не поняла, повторите ещё раз.'
+    if start_stop:
         res['response']['text'] = 'Отлично! Теперь введите конечную остановку.'
-    elif len(stops) == 2:
-        start_stop = stops[0]
-        final_stop = stops[1]
+    final_stop = get_final_stops(req)
+    if final_stop:
         # distance = get_distance(get_geo_info(cities[0], 'coordinates'), get_geo_info(cities[1], 'coordinates'))
         res['response']['text'] = f'Я готова построить маршрут от остановки "{start_stop}" до остановки "{final_stop}"'
     #     res['response']['text'] = 'Расстояние между этими городами: ' + str(round(distance)) + ' км.'
@@ -49,11 +49,14 @@ def handle_dialog(res, req):
     #     res['response']['text'] = 'Слишком много городов!'
 
 
-def get_stops(req):
-    stops = []
-    stop = req['request']['original_utterance']
-    stops.append(stop)
-    return stops
+def get_start_stops(req):
+    start_stop = req['request']['original_utterance']
+    return start_stop
+
+
+def get_final_stops(req):
+    final_stop = req['request']['original_utterance']
+    return final_stop
 
 
 if __name__ == '__main__':
