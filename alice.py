@@ -604,6 +604,7 @@ def handle_dialog(res, req):
     if not stops:
         res['response']['text'] = f'Я не поняла, повторите ещё раз.'
     elif start_stop and final_stop:
+        b = []
         b = get_buses(start_stop, final_stop)
         str_b = ''
         for bus in b:
