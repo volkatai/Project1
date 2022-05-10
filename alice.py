@@ -30,22 +30,16 @@ def main():
 def handle_dialog(res, req):
     user_id = req['session']['user_id']
     if req['session']['new']:
-        res['response']['text'] = 'Привет! Я подскажу тебе на каком автобусе добраться до нужного места!'
-        res['response']['text'] = 'Введи начальную остановку.'
+        res['response']['text'] = 'Привет! Я подскажу тебе на каком автобусе добраться до нужного места! ' \
+                                  'Введи начальную  конечную остановки через запятую.'
         return
     # Получаем города из нашего
-    # stops = [get_start_stops(req), get_final_stops(req)]
-    start_stop = get_start_stops(req)
-    final_stop = None
-    flg = False
-    # if not stops:
-    #     res['response']['text'] = f'Я не поняла, повторите ещё раз.'
-    if start_stop and not final_stop:
-        res['response']['text'] = 'Отлично! Теперь введите конечную остановку.'
-        flg = True
-    if flg:
-        final_stop = get_final_stops(req)
-    if final_stop:
+    stops = get_stops(req)
+    start_stop = stops[0]
+    final_stop = stops[1]
+    if not stops:
+        res['response']['text'] = f'Я не поняла, повторите ещё раз.'
+    elif start_stop and final_stop:
         # distance = get_distance(get_geo_info(cities[0], 'coordinates'), get_geo_info(cities[1], 'coordinates'))
         res['response']['text'] = f'Я готова построить маршрут от остановки "{start_stop}" до остановки "{final_stop}"'
     #     res['response']['text'] = 'Расстояние между этими городами: ' + str(round(distance)) + ' км.'
@@ -53,14 +47,14 @@ def handle_dialog(res, req):
     #     res['response']['text'] = 'Слишком много городов!'
 
 
-def get_start_stops(req):
-    start_stop = req['request']['original_utterance']
-    return start_stop
+def get_stops(req):
+    stops = [req['request']['original_utterance'].split(',')[0], req['request']['original_utterance'].split(',')[1]]
+    return stops
 
 
-def get_final_stops(req):
-    final_stop = req['request']['original_utterance']
-    return final_stop
+# def get_final_stops(req):
+    # final_stop = req['request']['original_utterance']
+    # return final_stop
 
 
 if __name__ == '__main__':
