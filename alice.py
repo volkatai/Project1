@@ -619,7 +619,7 @@ def handle_dialog(res, req):
             bus = get_bus(req)
             bus_number = bus
             sp_stops = []
-            if bus:
+            if bus[0].isdigit():
                 # print(buses.index(bus))
                 # print(buses_dict[bus])
                 if buses_dict[bus][0].index(start_stop) < buses_dict[bus][0].index(final_stop):
