@@ -610,6 +610,7 @@ def handle_dialog(res, req):
         for bus in b:
             str_b += ' '
             str_b += bus
+        res['response']['text'] = ''
         if bus_number is None:
             res['response']['text'] = f'Маршрут от остановки "{start_stop}" до остановки "{final_stop}" построен.\n\n' \
                                       f'Вы можете доехать до места назначения на одном из автобусов: {str_b}\n\n'\
@@ -618,7 +619,7 @@ def handle_dialog(res, req):
             bus = get_bus(req)
             bus_number = bus
             sp_stops = []
-            if int(bus[0]).isdigit():
+            if bus:
                 # print(buses.index(bus))
                 # print(buses_dict[bus])
                 if buses_dict[bus][0].index(start_stop) < buses_dict[bus][0].index(final_stop):
