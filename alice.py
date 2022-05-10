@@ -603,9 +603,13 @@ def handle_dialog(res, req):
         res['response']['text'] = f'Я не поняла, повторите ещё раз.'
     elif start_stop and final_stop:
         b = get_buses(start_stop, final_stop)
+        str_b = ''
+        for bus in b:
+            str_b += ' '
+            str_b += bus
         # distance = get_distance(get_geo_info(cities[0], 'coordinates'), get_geo_info(cities[1], 'coordinates'))
         res['response']['text'] = f'Маршрут от остановки "{start_stop}" до остановки "{final_stop}" построен.\n' \
-                                  f'Вы можете доезать до места назначения на одном из автобусов: {b}'
+                                  f'Вы можете доехать до места назначения на одном из автобусов: {str_b}'
     #     res['response']['text'] = 'Расстояние между этими городами: ' + str(round(distance)) + ' км.'
     # else:
     #     res['response']['text'] = 'Слишком много городов!'
