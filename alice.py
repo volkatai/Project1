@@ -36,9 +36,10 @@ def handle_dialog(res, req):
     # Получаем города из нашего
     # stops = [get_start_stops(req), get_final_stops(req)]
     start_stop = get_start_stops(req)
+    final_stop = None
     # if not stops:
     #     res['response']['text'] = f'Я не поняла, повторите ещё раз.'
-    if start_stop:
+    if start_stop and not final_stop:
         res['response']['text'] = 'Отлично! Теперь введите конечную остановку.'
     final_stop = get_final_stops(req)
     if final_stop:
