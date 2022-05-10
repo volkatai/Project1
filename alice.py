@@ -610,32 +610,32 @@ def handle_dialog(res, req):
             str_b += ' '
             str_b += bus
         res['response']['text'] = f'Маршрут от остановки "{start_stop}" до остановки "{final_stop}" построен.\n\n' \
-                                      f'Вы можете доехать до места назначения на одном из автобусов: {str_b}\n\n'\
-                                      'Если вы хотите узнать более подробную информацию по одному из маршрутов - ' \
-                                      'введите его номер.'
-        show_route(response, request.json)
-
-
-def show_route(res, req):
-    bus = get_bus(req)
-    # bus_number = bus
-    sp_stops = []
-    if bus:
-        # print(buses.index(bus))
-        # print(buses_dict[bus])
-        if buses_dict[bus][0].index(start_stop) < buses_dict[bus][0].index(final_stop):
-            for stop in buses_dict[bus][0][
-                        buses_dict[bus][0].index(start_stop) + 1:buses_dict[bus][0].index(final_stop) + 1]:
-                sp_stops.append(stop)
-        elif buses_dict[bus][1].index(start_stop) < buses_dict[bus][1].index(final_stop):
-            for stop in buses_dict[bus][1][
-                        buses_dict[bus][1].index(start_stop) + 1:buses_dict[bus][1].index(final_stop) + 1]:
-                sp_stops.append(stop)
-        res['response']['text'] = f'{sp_stops}'
-
-    #     res['response']['text'] = 'Расстояние между этими городами: ' + str(round(distance)) + ' км.'
-    # else:
-    #     res['response']['text'] = 'Слишком много городов!'
+                                  f'Вы можете доехать до места назначения на одном из автобусов: {str_b}'
+#                                       'Если вы хотите узнать более подробную информацию по одному из маршрутов - ' \
+#                                       'введите его номер.'
+#         show_route(response, request.json)
+#
+#
+# def show_route(res, req):
+#     bus = get_bus(req)
+#     # bus_number = bus
+#     sp_stops = []
+#     if bus:
+#         # print(buses.index(bus))
+#         # print(buses_dict[bus])
+#         if buses_dict[bus][0].index(start_stop) < buses_dict[bus][0].index(final_stop):
+#             for stop in buses_dict[bus][0][
+#                         buses_dict[bus][0].index(start_stop) + 1:buses_dict[bus][0].index(final_stop) + 1]:
+#                 sp_stops.append(stop)
+#         elif buses_dict[bus][1].index(start_stop) < buses_dict[bus][1].index(final_stop):
+#             for stop in buses_dict[bus][1][
+#                         buses_dict[bus][1].index(start_stop) + 1:buses_dict[bus][1].index(final_stop) + 1]:
+#                 sp_stops.append(stop)
+#         res['response']['text'] = f'{sp_stops}'
+#
+#     #     res['response']['text'] = 'Расстояние между этими городами: ' + str(round(distance)) + ' км.'
+#     # else:
+#     #     res['response']['text'] = 'Слишком много городов!'
 
 
 def get_stops(req):
