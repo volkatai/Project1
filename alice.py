@@ -48,8 +48,8 @@ def handle_dialog(res, req):
 
 def get_stops(req):
     stops = []
-    for entity in req['request']['nlu']['entities']:
-        stops.append(entity['value']['stop'])
+    for entity in req['request']['nlu']['original_utterance']:
+        stops.append(entity)
     return stops
 
 
