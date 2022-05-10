@@ -47,7 +47,7 @@ def handle_dialog(res, req):
 
 
 def get_stops(req):
-    stops = ['request']['original_utterance']
+    stops = req['request']['original_utterance']
     return stops
 
 
