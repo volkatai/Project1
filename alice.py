@@ -9,6 +9,7 @@ app = Flask(__name__)
 buses = []
 start_buses = []
 final_buses = []
+bus_number = None
 
 buses_dict = {'1': [['Центральный рынок', '7 микрорайон', 'Ул.Терешковой', 'Ж/д вокзал', 'Ул.Титова','Дом торговли',
                      'Кольцо трубного завода', 'Липецкое станкостроительное предприятие', 'Хладокомбинат',
@@ -591,6 +592,7 @@ def main():
 
 
 def handle_dialog(res, req):
+    global  bus_number
     user_id = req['session']['user_id']
     if req['session']['new']:
         res['response']['text'] = 'Привет! Я подскажу тебе на каком автобусе добраться до нужного места! ' \
@@ -610,23 +612,25 @@ def handle_dialog(res, req):
             str_b += bus
         # distance = get_distance(get_geo_info(cities[0], 'coordinates'), get_geo_info(cities[1], 'coordinates'))
         res['response']['text'] = f'Маршрут от остановки "{start_stop}" до остановки "{final_stop}" построен.\n\n' \
-                                  f'Вы можете доехать до места назначения на одном из автобусов: {str_b}\n\n' \
-                                  f'Если хотите узнать более подробную информацию по какому-либо маршруту, ' \
-                                  f'введите его номер'
-        bus = get_bus(req)
-        sp_stops = []
-        if bus:
-            # print(buses.index(bus))
-            # print(buses_dict[bus])
-            if buses_dict[bus][0].index(start_stop) < buses_dict[bus][0].index(final_stop):
-                for stop in buses_dict[bus][0][
-                            buses_dict[bus][0].index(start_stop) + 1:buses_dict[bus][0].index(final_stop) + 1]:
-                    sp_stops.append(stop)
-            elif buses_dict[bus][1].index(start_stop) < buses_dict[bus][1].index(final_stop):
-                for stop in buses_dict[bus][1][
-                            buses_dict[bus][1].index(start_stop) + 1:buses_dict[bus][1].index(final_stop) + 1]:
-                    sp_stops.append(stop)
-            res['response']['text'] = f'{sp_stops}'
+                                  f'Вы можете доехать до места назначения на одном из автобусов: {str_b}\n\n'
+        if bus_number is None:
+            res['response']['text'] = 'Если вы хотите узнать более подробную информацию по одному из маршрутов - ' \
+                                      'введите его номер.'
+            bus = get_bus(req)
+            bus_number = bus
+            sp_stops = []
+            if bus:
+                # print(buses.index(bus))
+                # print(buses_dict[bus])
+                if buses_dict[bus][0].index(start_stop) < buses_dict[bus][0].index(final_stop):
+                    for stop in buses_dict[bus][0][
+                                buses_dict[bus][0].index(start_stop) + 1:buses_dict[bus][0].index(final_stop) + 1]:
+                        sp_stops.append(stop)
+                elif buses_dict[bus][1].index(start_stop) < buses_dict[bus][1].index(final_stop):
+                    for stop in buses_dict[bus][1][
+                                buses_dict[bus][1].index(start_stop) + 1:buses_dict[bus][1].index(final_stop) + 1]:
+                        sp_stops.append(stop)
+                res['response']['text'] = f'{sp_stops}'
 
     #     res['response']['text'] = 'Расстояние между этими городами: ' + str(round(distance)) + ' км.'
     # else:
