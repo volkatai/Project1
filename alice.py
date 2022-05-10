@@ -605,7 +605,7 @@ def handle_dialog(res, req):
         buses = get_buses(start_stop, final_stop)
         # distance = get_distance(get_geo_info(cities[0], 'coordinates'), get_geo_info(cities[1], 'coordinates'))
         res['response']['text'] = f'Маршрут от остановки "{start_stop}" до остановки "{final_stop}" построен.\n' \
-                                  f'Вы можете доезать до места назначения на одном из автобусов: {buses}'
+                                  f'Вы можете доезать до места назначения на одном из автобусов: {buses[0]}'
     #     res['response']['text'] = 'Расстояние между этими городами: ' + str(round(distance)) + ' км.'
     # else:
     #     res['response']['text'] = 'Слишком много городов!'
@@ -626,8 +626,8 @@ def get_buses(start_stop, final_stop):
             if final_stop in stop:
                 print(final_stop, bus_number)
                 final_buses.append(bus_number)
-    print(start_buses)
-    print(final_buses)
+    # print(start_buses)
+    # print(final_buses)
     for bus in start_buses:
         if bus in final_buses:
             buses.append(bus)
